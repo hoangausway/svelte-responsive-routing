@@ -4,6 +4,7 @@
 - responsive using svelte-media.js
 - small: one component per route
 - bigger: 2 components per route, side-by-side
+- protected routes are guarded by 'authed' variable (a writable store)
 
 ## -----------------------------
 ## Vite template
