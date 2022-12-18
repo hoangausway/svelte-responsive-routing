@@ -2,9 +2,8 @@
 - responsive SPA setup
 - routing using page.js
 - responsive using svelte-media.js
-- 
-small: one component per route
-bigger: 2 components per route, side-by-side
+- small: one component per route
+- bigger: 2 components per route, side-by-side
 
 ## -----------------------------
 ## Vite template
