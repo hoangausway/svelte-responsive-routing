@@ -7,10 +7,11 @@
   import Double from './Double.svelte'
 
   const media = watchMedia({ small: '(max-width: 600px)' })
+  $: isSmall = $media.small
 
   $: {
     console.log('===AUTHENTICATED===', $authed ? 'AUTHED' : 'NOT AUTHED')
-    console.log('===RESPONSIVE===', $media.small ? 'SMALL' : 'LARGE')
+    console.log('===RESPONSIVE===', isSmall ? 'SMALL' : 'LARGE')
   }
 
   let component
@@ -29,7 +30,7 @@
   // reactive: $authed, $media.small
   $: setComponent = (route) => (ctx) => {
     if (route.public || $authed) {
-      component = $media.small ? Single : Double
+      component = isSmall ? Single : Double
       return
     }
     $recentPathRequiresAuth = ctx.pathname

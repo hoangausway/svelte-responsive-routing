@@ -15,7 +15,9 @@
         <a class="login" href="/login">Login</a>
       {:else}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <div class="logout" on:click|preventDefault={(e) => ($authed = false)}>Logout</div>
+        <div class="logout" on:click|preventDefault={(e) => ($authed = false)}>
+          Logout
+        </div>
       {/if}
     </li>
   </ul>
@@ -24,6 +26,12 @@
 </div>
 
 <style>
+  :root {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+      Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 1rem;
+  }
+
   ul {
     display: flex;
     list-style-type: none;
