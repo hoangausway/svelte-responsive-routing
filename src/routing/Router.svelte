@@ -1,50 +1,50 @@
 <script>
-  import watchMedia from 'svelte-media'
-  import page from 'page'
+  import watchMedia from 'svelte-media';
+  import page from 'page';
 
-  import routes, { authed, recentPathRequiresAuth } from './routes'
-  import Single from './Single.svelte'
-  import Double from './Double.svelte'
+  import routes, {authed, recentPathRequiresAuth} from './routes';
+  import Single from './Single.svelte';
+  import Double from './Double.svelte';
 
-  const media = watchMedia({ small: '(max-width: 600px)' })
-  $: isSmall = $media.small
+  const media = watchMedia({small: '(max-width: 600px)'});
+  $: isSmall = $media.small;
 
   $: {
-    console.log('===AUTHENTICATED===', $authed ? 'AUTHED' : 'NOT AUTHED')
-    console.log('===RESPONSIVE===', isSmall ? 'SMALL' : 'LARGE')
+    console.log('===AUTHENTICATED===', $authed ? 'AUTHED' : 'NOT AUTHED');
+    console.log('===RESPONSIVE===', isSmall ? 'SMALL' : 'LARGE');
   }
 
-  let component
-  let props
+  let component;
+  let props;
 
   // def: set props vatiable to params and route
-  const setProps = (route) => (ctx, next) => {
+  const setProps = route => (ctx, next) => {
     props =
       ctx.params && Object.keys(ctx.params).length > 0
-        ? { params: { ...ctx.params }, route }
-        : { route }
-    next()
-  }
+        ? {params: {...ctx.params}, route}
+        : {route};
+    next();
+  };
 
   // def: set component, reactive to authed and media
   // reactive: $authed, $media.small
-  $: setComponent = (route) => (ctx) => {
+  $: setComponent = route => ctx => {
     if (route.public || $authed) {
-      component = isSmall ? Single : Double
-      return
+      component = isSmall ? Single : Double;
+      return;
     }
-    $recentPathRequiresAuth = ctx.pathname
-    page.redirect('/login')
-  }
+    $recentPathRequiresAuth = ctx.pathname;
+    page.redirect('/login');
+  };
 
   // routing by setup porps and component for specified path
-  $: routing = (routes) => (path) =>
-    page(path, setProps(routes[path]), setComponent(routes[path]))
+  $: routing = routes => path =>
+    page(path, setProps(routes[path]), setComponent(routes[path]));
 
   // do routing: reactive to setupComponent
   $: {
-    Object.keys(routes).forEach(routing(routes))
-    page.start({ hashbang: true })
+    Object.keys(routes).forEach(routing(routes));
+    page.start({hashbang: true});
   }
 </script>
 

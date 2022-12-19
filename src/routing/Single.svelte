@@ -1,7 +1,7 @@
 <script>
-  export let props
-  $: params = props.params
-  $: route = props.route
+  export let props;
+  $: params = props.params;
+  $: route = props.route;
 </script>
 
 {#if params}

@@ -1,10 +1,10 @@
 <script>
-  export let props
-  $: params = props.params
-  $: route = props.route
-  $: left = route.left || route.component
-  $: right = route.right
-  $: paramsForLeft = params && route.component.name === left?.name
+  export let props;
+  $: params = props.params;
+  $: route = props.route;
+  $: left = route.left || route.component;
+  $: right = route.right;
+  $: paramsForLeft = params && route.component.name === left && left.name;
 </script>
 
 <!-- logic per if right component specified -->

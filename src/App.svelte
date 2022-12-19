@@ -1,6 +1,6 @@
 <script>
-  import Router from './routing/Router.svelte'
-  import { authed } from './routing/routes'
+  import Router from './routing/Router.svelte';
+  import {authed} from './routing/routes';
 </script>
 
 <div>
@@ -15,7 +15,7 @@
         <a class="login" href="/login">Login</a>
       {:else}
         <!-- svelte-ignore a11y-click-events-have-key-events -->
-        <div class="logout" on:click|preventDefault={(e) => ($authed = false)}>
+        <div class="logout" on:click|preventDefault={() => ($authed = false)}>
           Logout
         </div>
       {/if}
@@ -29,7 +29,7 @@
   :root {
     font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
       Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-      margin: 1rem;
+    margin: 1rem;
   }
 
   ul {

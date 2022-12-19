@@ -1,13 +1,13 @@
-import { writable } from 'svelte/store'
+import {writable} from 'svelte/store';
 
-import Login from '../components/Login.svelte'
-import Home from '../components/Home.svelte'
-import About from '../components/About.svelte'
-import Lorem from '../components/Lorem.svelte'
-import NotFound from '../components/NotFound.svelte'
+import Login from '../components/Login.svelte';
+import Home from '../components/Home.svelte';
+import About from '../components/About.svelte';
+import Lorem from '../components/Lorem.svelte';
+import NotFound from '../components/NotFound.svelte';
 
-export const authed = writable(false)
-export const recentPathRequiresAuth = writable('/')
+export const authed = writable(false);
+export const recentPathRequiresAuth = writable('/');
 
 export default {
   '/': {
@@ -34,5 +34,4 @@ export default {
     component: NotFound,
     public: true
   }
-}
-
+};

@@ -1,6 +1,5 @@
 <script>
-  import Logout from './Logout.svelte'
-  export let params
+  export let params;
 </script>
 
 <div class="lorem">
