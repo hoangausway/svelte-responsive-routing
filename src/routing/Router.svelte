@@ -17,7 +17,7 @@
   let component;
   let props;
 
-  // def: set props vatiable to params and route
+  // def: set 'props' variable to params and route
   const setProps = route => (ctx, next) => {
     props =
       ctx.params && Object.keys(ctx.params).length > 0
