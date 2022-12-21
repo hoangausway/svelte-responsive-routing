@@ -1,0 +1,9 @@
+Note: To not get Parser Error regarding 'import.meta...' 
+it should set 'parserOptions' in .eslintrc.json as below:
+{
+    ...,
+    "parserOptions": {
+        "ecmaVersion": "latest",
+        "sourceType": "module"
+    }
+}

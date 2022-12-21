@@ -13,7 +13,7 @@
     }
   ],
   "parserOptions": {
-    "ecmaVersion": 2019,
+    "ecmaVersion": "latest",
     "sourceType": "module"
   },
   "plugins": ["import", "svelte3"]
