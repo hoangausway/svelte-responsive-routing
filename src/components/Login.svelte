@@ -1,23 +1,40 @@
 <script>
   import page from 'page';
-  import {authed, recentPathRequiresAuth} from '../routing/routes';
+
+  import {redirectPath} from '../routing/routes';
+  import {auth} from '../services/auth';
+  import {useLogin} from '../states/useRemoteStates';
+
   $: {
-    console.log('LOGIN authed: ', $authed);
-    console.log('LOGIN recentPathRequiresAuth: ', $recentPathRequiresAuth);
+    console.log('LOGIN authed: ', $auth.authed);
+    console.log('LOGIN redirectPath: ', $redirectPath);
   }
 
+  // credentials
+  const email = 'abc2@gmail.com';
+  const password = 'Hoang123';
+  const location = 'PR01';
+
+  // Mutations
+  const mutation = useLogin();
+
   function login() {
-    // set authed
-    $authed = true;
-    // redirect to the route before authentication
-    page.redirect($recentPathRequiresAuth);
+    $mutation
+      .mutateAsync({email, password, location})
+      .then(() => page.redirect($redirectPath));
   }
 </script>
 
-<p>Is authed? <span>{$authed}</span></p>
+<p>Is authed? <span>{$auth.authed}</span></p>
 <p>
-  Path to redirect after login success: <span>{$recentPathRequiresAuth}</span>
+  Path to redirect after login success: <span>{$redirectPath}</span>
 </p>
+{#if $mutation.isLoading}
+  <p>Login...</p>
+{:else if $mutation.isError}
+  <div>An error occurred: {$mutation.error.message}</div>
+{/if}
+
 <button on:click={login}>Login</button>
 
 <style>

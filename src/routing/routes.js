@@ -6,8 +6,7 @@ import About from '../components/About.svelte';
 import Lorem from '../components/Lorem.svelte';
 import NotFound from '../components/NotFound.svelte';
 
-export const authed = writable(false);
-export const recentPathRequiresAuth = writable('/');
+export const redirectPath = writable('/');
 
 export default {
   '/': {

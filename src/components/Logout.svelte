@@ -1,5 +1,5 @@
 <script>
-  import {authed} from '../routing/routes';
+  import {auth} from '../services/auth';
 </script>
 
-<button on:click={() => ($authed = false)}>Logout</button>
+<button on:click={() => $auth.reset()}>Logout</button>

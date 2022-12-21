@@ -2,7 +2,9 @@
   import watchMedia from 'svelte-media';
   import page from 'page';
 
-  import routes, {authed, recentPathRequiresAuth} from './routes';
+  import routes, {redirectPath} from './routes';
+  import {auth} from '../services/auth'
+
   import Single from './Single.svelte';
   import Double from './Double.svelte';
 
@@ -10,7 +12,7 @@
   $: isSmall = $media.small;
 
   $: {
-    console.log('===AUTHENTICATED===', $authed ? 'AUTHED' : 'NOT AUTHED');
+    console.log('===AUTHENTICATED===', $auth.authed ? 'AUTHED' : 'NOT AUTHED');
     console.log('===RESPONSIVE===', isSmall ? 'SMALL' : 'LARGE');
   }
 
@@ -29,11 +31,11 @@
   // def: set component, reactive to authed and media
   // reactive: $authed, $media.small
   $: setComponent = route => ctx => {
-    if (route.public || $authed) {
+    if (route.public || $auth.authed) {
       component = isSmall ? Single : Double;
       return;
     }
-    $recentPathRequiresAuth = ctx.pathname;
+    $redirectPath = ctx.pathname;
     page.redirect('/login');
   };
 
