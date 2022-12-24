@@ -17,6 +17,7 @@
     <li><a href="/lorem/10">Lorem 10</a></li>
     <li><a href="/lorem/22">Lorem 22</a></li>
     <li><a href="/bar">Bar</a></li>
+    <li><a href="/signup">Signup</a></li>
     <li>
       {#if !$auth.authed}
         <a class="login" href="/login">Login</a>

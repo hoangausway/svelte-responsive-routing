@@ -1,5 +1,6 @@
 import {writable} from 'svelte/store';
 
+import Signup from '../components/Signup.svelte';
 import Login from '../components/Login.svelte';
 import Home from '../components/Home.svelte';
 import About from '../components/About.svelte';
@@ -24,6 +25,10 @@ export default {
     left: About,
     right: Lorem,
     public: false
+  },
+  '/signup': {
+    component: Signup,
+    public: true
   },
   '/login': {
     component: Login,

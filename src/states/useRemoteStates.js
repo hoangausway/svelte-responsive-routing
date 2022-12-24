@@ -2,7 +2,7 @@ import auth from '../services/auth'
 import axiosPublic from '../services/axiosPublic'
 import axiosAuth from '../services/axiosAuth'
 
-// const urlSignup = '/auth/signup'
+const urlSignup = '/auth/signup'
 const urlLogin = '/auth/login'
 const urlRefreshToken = '/auth/refresh-token'
 
@@ -22,6 +22,13 @@ auth.subscribe(authObj => {
 export const useLogin = (creds) => {
   return axiosPublic.post(urlLogin, creds)
     .then(res => auth.updateAuth(res.data))
+    .catch(console.log)
+}
+
+// { name, email, password, location, role }
+export const useSignup = (creds) => {
+  return axiosPublic.post(urlSignup, creds)
+    .then(res => console.log('SIGNUP SUCCESS', res.data))
     .catch(console.log)
 }
 
