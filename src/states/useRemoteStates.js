@@ -1,4 +1,3 @@
-import { useMutation } from '@sveltestack/svelte-query'
 import auth from '../services/auth'
 import axiosPublic from '../services/axiosPublic'
 import axiosAuth from '../services/axiosAuth'
@@ -6,8 +5,9 @@ import axiosAuth from '../services/axiosAuth'
 // const urlSignup = '/auth/signup'
 const urlLogin = '/auth/login'
 const urlRefreshToken = '/auth/refresh-token'
-const urlOrdersReport = '/order/pending-orders' //'/order/orders/1668087000000/1668432600000'
-// tsFrom=1668087000*1000, tsTo=1668432600*1000
+
+// an example of authed query
+const urlOrdersReport = '/order/pending-orders'
 
 auth.subscribe(authObj => {
   console.log('authObj', authObj)
@@ -16,17 +16,23 @@ auth.subscribe(authObj => {
 })
 
 /*
-  To call: 
-  const mutation = useLogin()
-  $mutation.mutateAsync(credentials)
+  credentials may be {email, passord, locationId}
+  send request using axiosPublic
 */
-export const useLogin = () => {
-  const fn = creds => axiosPublic.post(urlLogin, creds)
-  const onSuccess = ({ data }) => auth.authenticate(data)
-
-  return useMutation(fn, { onSuccess, onError: console.error })
+export const useLogin = (creds) => {
+  return axiosPublic.post(urlLogin, creds)
+    .then(res => auth.updateAuth(res.data))
+    .catch(console.log)
 }
 
+/*
+  send request using axiosAuth
+  expected there are accessToken and refreshToken, 
+  the accessToken may be expired
+  interceptors: 
+  - request interceptor for adding accessToken in authorization header
+  - response interceptor for calling refresh token in case accessToken expires
+*/
 export const useOrderPending = (locationId) => {
   axiosAuth.get(`${urlOrdersReport}/${locationId}`)
     .then(res => console.log(res.data))

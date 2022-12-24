@@ -9,6 +9,9 @@ const axiosAuth = axios.create({
   withCredentials: true
 })
 
+axiosAuth.requestInterceptorId = null
+axiosAuth.responseInterceptorId = null
+
 const interceptRequest = (accsessToken) => {
   return axiosAuth.interceptors.request.use(
     config => {
@@ -29,7 +32,7 @@ const interceptResponse = (refreshToken, urlRefreshToken) => {
       if (error?.response?.status === 403 && !prevRequest?.sent) {
         prevRequest.sent = true
         const res = await axiosPublic.post(urlRefreshToken, { refreshToken })
-        prevRequest.headers['Authorization'] = `Bearer ${res.data.data.accessToken}`
+        prevRequest.headers['Authorization'] = `Bearer ${res.data.accessToken}`
         return axiosAuth(prevRequest)
       }
       return Promise.reject(error)
@@ -38,8 +41,14 @@ const interceptResponse = (refreshToken, urlRefreshToken) => {
 }
 
 axiosAuth['intercept'] = ({ accessToken, refreshToken, urlRefreshToken }) => {
-  interceptRequest(accessToken)
-  interceptResponse(refreshToken, urlRefreshToken)
+  // if exists, eject the interceptors
+  axiosAuth.requestInterceptorId
+    && axios.interceptors.request.eject(axiosAuth.requestInterceptorId)
+  axiosAuth.responseInterceptorId
+    && axios.interceptors.response.eject(axiosAuth.responseInterceptorId)
+  // create interceptors
+  axiosAuth.requestInterceptorId = interceptRequest(accessToken)
+  axiosAuth.responseInterceptorId = interceptResponse(refreshToken, urlRefreshToken)
 }
 
 export default axiosAuth
