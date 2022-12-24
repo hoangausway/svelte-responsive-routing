@@ -1,3 +1,5 @@
+import { useQuery } from '@sveltestack/svelte-query'
+
 import auth from '../services/auth'
 import axiosPublic from '../services/axiosPublic'
 import axiosAuth from '../services/axiosAuth'
@@ -7,7 +9,7 @@ const urlLogin = '/auth/login'
 const urlRefreshToken = '/auth/refresh-token'
 
 // an example of authed query
-const urlOrdersReport = '/order/pending-orders'
+const urlPendingOrdersByLocId = locId => `/order/pending-orders/${locId}`
 
 auth.subscribe(authObj => {
   console.log('authObj', authObj)
@@ -25,6 +27,13 @@ export const useLogin = (creds) => {
     .catch(console.log)
 }
 
+/* SVELTE-QUERY */
+// keys
+export const qKeys = {
+  order: 'order',
+  pendingOrdersByLocId: locId => [...qKeys.order, 'pending-orders', locId]
+}
+
 /*
   send request using axiosAuth
   expected there are accessToken and refreshToken, 
@@ -32,10 +41,17 @@ export const useLogin = (creds) => {
   interceptors: 
   - request interceptor for adding accessToken in authorization header
   - response interceptor for calling refresh token in case accessToken expires
+  (error doe 403)
 */
-export const useOrderPending = (locationId) => {
-  axiosAuth.get(`${urlOrdersReport}/${locationId}`)
-    .then(res => console.log(res.data))
-    .catch(console.log)
+export const usePendingOrdersByLocId = locId => {
+  return useQuery(
+    qKeys.pendingOrdersByLocId(locId),
+    () => axiosAuth.get(urlPendingOrdersByLocId(locId)),
+    {
+      refetchInterval: 20000, // 20s
+      initialData: () => [],
+      onSuccess: console.log,
+      onError: console.log
+    })
 }
 

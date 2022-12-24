@@ -1,12 +1,13 @@
-import {writable} from 'svelte/store';
+import { writable } from 'svelte/store'
 
-import Login from '../components/Login.svelte';
-import Home from '../components/Home.svelte';
-import About from '../components/About.svelte';
-import Lorem from '../components/Lorem.svelte';
-import NotFound from '../components/NotFound.svelte';
+import Login from '../components/Login.svelte'
+import Home from '../components/Home.svelte'
+import About from '../components/About.svelte'
+import Lorem from '../components/Lorem.svelte'
+import PendingOrders from '../components/PendingOrders.svelte'
+import NotFound from '../components/NotFound.svelte'
 
-export const redirectPath = writable('/');
+export const redirectPath = writable('/')
 
 export default {
   '/': {
@@ -25,6 +26,12 @@ export default {
     right: Lorem,
     public: false
   },
+  '/pending-orders/:locId': {
+    component: PendingOrders,
+    left: About,
+    right: PendingOrders,
+    public: false
+  },
   '/login': {
     component: Login,
     public: true
@@ -33,4 +40,4 @@ export default {
     component: NotFound,
     public: true
   }
-};
+}
