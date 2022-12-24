@@ -3,7 +3,7 @@
   import page from 'page';
 
   import routes, {redirectPath} from './routes';
-  import {auth} from '../services/auth'
+  import auth from '../services/auth'
 
   import Single from './Single.svelte';
   import Double from './Double.svelte';

@@ -2,7 +2,7 @@
   import page from 'page';
 
   import {redirectPath} from '../routing/routes';
-  import {auth} from '../services/auth';
+  import auth from '../services/auth';
   import {useLogin} from '../states/useRemoteStates';
 
   $: {
