@@ -1,5 +1,7 @@
 import { get, writable } from 'svelte/store'
 
+console.log('auth,js RUN')
+
 const initStore = { authed: false }
 
 const auth = function createAuth() {
