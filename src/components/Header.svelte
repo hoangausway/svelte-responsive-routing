@@ -1,13 +1,5 @@
 <script>
   import auth from '../services/auth';
-  import {useOrderPending} from '../states/useRemoteStates';
-
-  $: console.log('auth', auth);
-  $: console.log('$auth', $auth);
-
-  const reportsHandle = () => {
-    useOrderPending('PR01');
-  };
 </script>
 
 <div>
@@ -27,7 +19,6 @@
         </div>
       {/if}
     </li>
-    <li><button on:click={reportsHandle}>Reports</button></li>
   </ul>
   <hr />
 </div>

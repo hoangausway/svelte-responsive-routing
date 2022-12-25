@@ -3,22 +3,15 @@
 
   import {redirectPath} from '../routing/routes';
   import auth from '../services/auth';
-  import {useLogin} from '../states/useRemoteStates';
 
   $: {
     console.log('LOGIN authed: ', $auth.authed);
     console.log('LOGIN redirectPath: ', $redirectPath);
   }
 
-  // credentials
-  const email = 'abc2@gmail.com';
-  const password = 'Hoang123';
-  const location = 'PR01';
-
   const login = () => {
-    useLogin({email, password, location})
-      .then(() => page.redirect($redirectPath))
-      .catch(console.log);
+    auth.updateAuth(true)
+    page.redirect($redirectPath);
   };
 </script>
 
